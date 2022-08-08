@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="openvidu-browser-2.22.0.js"></script>
+	<script src="openvidu-client.js"></script>
+  <title>Document</title>
+  <style>
+    .block {
+      border: 1px solid red;
+      width: 300px;
+      height: 100px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="join">
+		<h1>Join a video session</h1>
+		<form onsubmit="joinSession(); return false">
+			<p>
+				<label>Session:</label>
+				<input type="text" id="sessionName" value="SessionA" required>
+				<input type="text" id="userName" value="userName" required>
+			</p>
+			<p>
+				<input type="submit" value="JOIN">
+			</p>
+		</form>
+	</div>
+
+	<div id="session" style="display: none;">
+		<div id="session-header">
+			<h1 id="session-title"></h1>
+			<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" onmouseup="removeUser(); leaveSession()" value="Leave session">
+		</div>
+		<div id="video-container" class="col-md-6"></div>
+	</div>
+</body>
+</body>
+</html>
