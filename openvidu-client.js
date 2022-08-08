@@ -1,7 +1,7 @@
-var OV;
-var session;
-var sessionName;	// Name of the video session the user will connect to
-var token;			// Token retrieved from OpenVidu Server
+let OV;
+let session;
+let sessionName;	// Name of the video session the user will connect to
+let token;			// Token retrieved from OpenVidu Server
 
 /* OPENVIDU METHODS */
 function joinSession() {
@@ -23,7 +23,7 @@ function joinSession() {
 			console.warn(exception);
 		});
 
-		var userName = $('#userName').val()
+		let userName = document.querySelector('#userName').value
 
 		session.connect(token, { clientData: userName })
 			.then(() => {
@@ -32,7 +32,7 @@ function joinSession() {
 				document.getElementById('join').style.display = 'none';
 				document.getElementById('session').style.display = 'block';
 
-				var publisher = OV.initPublisher('video-container', {
+				let publisher = OV.initPublisher('video-container', {
 					audioSource: undefined, // The source of audio. If undefined default microphone
 					videoSource: null, // The source of video. If undefined default webcam
 					publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
@@ -44,7 +44,7 @@ function joinSession() {
 				});
 
 				publisher.on('videoElementCreated', (event) => {
-					var userData = {
+					let userData = {
 						userName: userName
 					};
 					appendUserData(event.element, userData);
@@ -96,7 +96,7 @@ function removeUser() {
 }
 
 function httpPostRequest(url, body, errorMsg, callback) {
-	var http = new XMLHttpRequest();
+	let http = new XMLHttpRequest();
 	http.open('POST', url, true);
 	http.setRequestHeader('Content-type', 'application/json');
 	http.addEventListener('readystatechange', processRequest, false);
@@ -121,8 +121,8 @@ function httpPostRequest(url, body, errorMsg, callback) {
 /* APPLICATION BROWSER METHODS */
 
 function appendUserData(videoElement, connection) {
-	var userName;
-	var nodeId;
+	let userName;
+	let nodeId;
 	if (connection.userName) {
 		userName = connection.userName;
 		nodeId = 'main-videodata';
@@ -130,7 +130,7 @@ function appendUserData(videoElement, connection) {
 		userName = JSON.parse(connection.data).clientData;
 		nodeId = connection.connectionId;
 	}
-	var dataNode = document.createElement('div');
+	let dataNode = document.createElement('div');
 	dataNode.className = "data-node";
 	dataNode.id = "data-" + nodeId;
 	dataNode.innerHTML = "<p class='userName'>" + userName + "</p>";
