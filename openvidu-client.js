@@ -44,10 +44,10 @@ function joinSession() {
 				});
 
 				publisher.on('videoElementCreated', (event) => {
-					let userData = {
-						userName: userName
-					};
-					appendUserData(event.element, userData);
+					// let userData = {
+					// 	userName: userName
+					// };
+					// appendUserData(event.element, userData);
 				});
 
 				session.publish(publisher);
