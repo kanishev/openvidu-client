@@ -105,20 +105,20 @@ function getToken(callback) {
 
 function httpPostRequest(url, body, errorMsg, callback) {
 
-	// fetch("https://service.openvidu.stage.weje.io/createSession", {
-	// 	method: "POST",
-	// 	headers: {
-	// 		'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-	// 	},
-	// 	body: JSON.stringify({sessionName: sessionName})
-	// }).then(function(res){
-	// 		return res.json()}
-	// 	)
-	// 	.then(function(res){
-	// 		return res
-	// 	})
-	// 	.catch(function(error){console.warn(error)})
+	return fetch("https://service.openvidu.stage.weje.io/createSession", {
+		method: "POST",
+		headers: {
+			'Accept': 'application/json',
+      'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({sessionName: sessionName})
+	}).then(function(res){
+			return res.json()}
+		)
+		.then(function(res){
+			callback(res)
+		})
+		.catch(function(error){console.warn(error)})
 
 	let http = new XMLHttpRequest();
 	http.open('POST', url, true);
