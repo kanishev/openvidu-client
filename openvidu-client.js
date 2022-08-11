@@ -16,9 +16,9 @@ function joinSession() {
 		});
 
 		session.on('streamDestroyed', (event) => {
+			// Delete the HTML element with the user's name and nickname
 			removeUserData(event.stream.connection);
 		});
-
 		session.on('exception', (exception) => {
 			console.warn(exception);
 		});
@@ -28,9 +28,9 @@ function joinSession() {
 		session.connect(token, { clientData: userName })
 			.then(() => {
 
-				document.getElementById('session-title').innerText = sessionName;
-				document.getElementById('join').style.display = 'none';
-				document.getElementById('session').style.display = 'block';
+				// document.getElementById('session-title').innerText = sessionName;
+				// document.getElementById('join').style.display = 'none';
+				// document.getElementById('session').style.display = 'block';
 
 				let publisher = OV.initPublisher('video-container', {
 					audioSource: undefined, // The source of audio. If undefined default microphone
@@ -73,7 +73,7 @@ function getToken(callback) {
 	sessionName = document.querySelector("#sessionName").value  // Video-call chosen by the user
 
 	httpPostRequest(
-		'https://service.openvidu.stage.weje.io/getToken',
+		'https://service.openvidu.stage.weje.io/createSession',
 		{sessionName: sessionName},
 		'Request of TOKEN gone WRONG:',
 		(response) => {
@@ -84,18 +84,35 @@ function getToken(callback) {
 	);
 }
 
-function removeUser() {
-	httpPostRequest(
-		'https://service.openvidu.stage.weje.io/removeUser',
-		{sessionName: sessionName, token: token},
-		'User couldn\'t be removed from session',
-		(response) => {
-			console.warn("You have been removed from session " + sessionName);
-		}
-	);
-}
+// function removeUser() {
+// 	console.log('remove user')
+// 	httpPostRequest(
+// 		'http://localhost:8801/removeUser',
+// 		{sessionName: sessionName, token: token},
+// 		'User couldn\'t be removed from session',
+// 		(response) => {
+// 			console.warn("You have been removed from session " + sessionName);
+// 		}
+// 	);
+// }
 
 function httpPostRequest(url, body, errorMsg, callback) {
+
+	// fetch("https://service.openvidu.stage.weje.io/createSession", {
+	// 	method: "POST",
+	// 	headers: {
+	// 		'Accept': 'application/json',
+  //     'Content-Type': 'application/json'
+	// 	},
+	// 	body: JSON.stringify({sessionName: sessionName})
+	// }).then(function(res){
+	// 		return res.json()}
+	// 	)
+	// 	.then(function(res){
+	// 		return res
+	// 	})
+	// 	.catch(function(error){console.warn(error)})
+
 	let http = new XMLHttpRequest();
 	http.open('POST', url, true);
 	http.setRequestHeader('Content-type', 'application/json');
@@ -118,25 +135,25 @@ function httpPostRequest(url, body, errorMsg, callback) {
 	}
 }
 
-/* APPLICATION BROWSER METHODS */
+// /* APPLICATION BROWSER METHODS */
 
-function appendUserData(videoElement, connection) {
-	let userName;
-	let nodeId;
-	if (connection.userName) {
-		userName = connection.userName;
-		nodeId = 'main-videodata';
-	} else {
-		userName = JSON.parse(connection.data).clientData;
-		nodeId = connection.connectionId;
-	}
-	let dataNode = document.createElement('div');
-	dataNode.className = "data-node";
-	dataNode.id = "data-" + nodeId;
-	dataNode.innerHTML = "<p class='userName'>" + userName + "</p>";
-	videoElement.parentNode.insertBefore(dataNode, videoElement.nextSibling);
-}
+// function appendUserData(videoElement, connection) {
+// 	let userName;
+// 	let nodeId;
+// 	if (connection.userName) {
+// 		userName = connection.userName;
+// 		nodeId = 'main-videodata';
+// 	} else {
+// 		userName = JSON.parse(connection.data).clientData;
+// 		nodeId = connection.connectionId;
+// 	}
+// 	let dataNode = document.createElement('div');
+// 	dataNode.className = "data-node";
+// 	dataNode.id = "data-" + nodeId;
+// 	dataNode.innerHTML = "<p class='userName'>" + userName + "</p>";
+// 	videoElement.parentNode.insertBefore(dataNode, videoElement.nextSibling);
+// }
 
-function removeUserData(connection) {
-	document.querySelector("#data-" + connection.connectionId).remove();
-}
+// function removeUserData(connection) {
+// 	document.querySelector("#data-" + connection.connectionId).remove();
+// }
