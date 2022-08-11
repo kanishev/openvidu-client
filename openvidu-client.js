@@ -61,6 +61,13 @@ function joinSession() {
 	return false;
 }
 
+window.onbeforeunload = () => { // Gracefully leave session
+	if (session) {
+		leaveSession();
+	}
+	// logOut();
+}
+
 function leaveSession() {
 	session.disconnect();
 	session = null;
